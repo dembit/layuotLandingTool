@@ -4,6 +4,27 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const WebpackMd5Hash = require('webpack-md5-hash');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+
+
+const fs = require('fs')
+
+function generateHtmlPlugins(templateDir) {
+  const templateFiles = fs.readdirSync(path.resolve(__dirname, templateDir));
+  return templateFiles.map(item => {
+    const parts = item.split('.');
+    const name = parts[0];
+    const extension = parts[1];
+    return new HtmlWebpackPlugin({
+      filename: `${name}.html`,
+      template: path.resolve(__dirname, `${templateDir}/${name}.${extension}`),
+      inject: false,
+      hash: true,
+    })
+  })
+}
+
+const htmlPlugins = generateHtmlPlugins('./src/html/views')
+
 module.exports = {
   entry: { main: './src/index.js' },
   output: {
@@ -22,6 +43,11 @@ module.exports = {
       {
         test: /\.scss$/,
         use:  [  'style-loader', MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader', 'sass-loader']
+      },
+      {
+        test: /\.html$/,
+        include: path.resolve(__dirname, 'src/html/includes'),
+        use: ['raw-loader']
       }
     ]
   },
@@ -30,12 +56,6 @@ module.exports = {
     new MiniCssExtractPlugin({
       filename: 'style.[contenthash].css',
     }),
-    new HtmlWebpackPlugin({
-      inject: false,
-      hash: true,
-      template: './src/index.html',
-      filename: 'index.html'
-    }),
     new WebpackMd5Hash()
-  ]
+  ].concat(htmlPlugins)
 };

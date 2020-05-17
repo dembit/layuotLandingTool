@@ -1,0 +1,24 @@
+::-webkit-input-placeholder {
+  color: gray;
+  background: red; }
+
+::-moz-placeholder {
+  color: gray;
+  background: red; }
+
+:-ms-input-placeholder {
+  color: gray;
+  background: red; }
+
+::-ms-input-placeholder {
+  color: gray;
+  background: red; }
+
+::placeholder {
+  color: gray;
+  background: red; }
+
+#container {
+  box-sizing: border-box;
+  display: inline; }
+
