@@ -6,7 +6,7 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 const CopyPlugin= require('copy-webpack-plugin');
-
+const autoprefixer = require('autoprefixer');
 
 const fs = require('fs')
 
@@ -30,7 +30,7 @@ const htmlPlugins = generateHtmlPlugins('./src/html/views')
 module.exports = {
   entry: { main: './src/js/index.js' },
   output: {
-    filename: './js/[name].[chunkhash].js'
+    filename: './js/[name].[chunkhash].js',
   },
   module: {
     rules: [
@@ -43,7 +43,12 @@ module.exports = {
       },
       {
         test: /\.scss$/,
-        use:  [  'style-loader', MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader', 'sass-loader']
+        use:  [  'style-loader', MiniCssExtractPlugin.loader, 'css-loader', {
+              loader: 'postcss-loader',
+              options: {
+                plugins: () => [autoprefixer()]
+              }
+            }, 'sass-loader']
       },
       {
         test: /\.html$/,
