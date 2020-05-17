@@ -5,6 +5,8 @@ const WebpackMd5Hash = require('webpack-md5-hash');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
+const CopyPlugin= require('copy-webpack-plugin');
+
 
 const fs = require('fs')
 
@@ -26,18 +28,17 @@ function generateHtmlPlugins(templateDir) {
 const htmlPlugins = generateHtmlPlugins('./src/html/views')
 
 module.exports = {
-  entry: { main: './src/index.js' },
+  entry: { main: './src/js/index.js' },
   output: {
-    path: path.resolve(__dirname, 'dist'),
-    filename: '[name].[chunkhash].js'
+    filename: './js/[name].[chunkhash].js'
   },
   module: {
     rules: [
       {
         test: /\.js$/,
-        exclude: /node_modules/,
+        include: path.resolve(__dirname, 'src/js'),
         use: {
-          loader: "babel-loader"
+          loader: 'babel-loader', 
         }
       },
       {
@@ -52,10 +53,28 @@ module.exports = {
     ]
   },
   plugins: [ 
+    new CopyPlugin({
+      patterns: [{
+        from: './src/fonts',
+        to: './fonts'
+      },
+      {
+        from: './src/favicon',
+        to: './favicon'
+      },
+      {
+        from: './src/img',
+        to: './img'
+      },
+      {
+        from: './src/uploads',
+        to: './uploads'
+      }
+    ]}),
     new CleanWebpackPlugin(),
     new MiniCssExtractPlugin({
-      filename: 'style.[contenthash].css',
+      filename: './css/style.[contenthash].css',
     }),
-    new WebpackMd5Hash()
+    new WebpackMd5Hash(),
   ].concat(htmlPlugins)
 };

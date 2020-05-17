@@ -1,10 +1,9 @@
-::placeholder {
-  color: gray;
-  background: red;
-}
+$width: 5em; 
 
-#container {
+.container {
 box-sizing: border-box;
 display: inline;
+transition: all .5s ease;
+ font-size: $width;
 
  }
