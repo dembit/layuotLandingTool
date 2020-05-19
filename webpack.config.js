@@ -1,38 +1,29 @@
 // Webpack v4
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const WebpackMd5Hash = require('webpack-md5-hash');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 const CopyPlugin= require('copy-webpack-plugin');
 const autoprefixer = require('autoprefixer');
 
-const fs = require('fs')
+const ImageminPlugin = require('imagemin-webpack-plugin').default;
+const imageminMozjpeg = require('imagemin-mozjpeg');
 
-function generateHtmlPlugins(templateDir) {
-  const templateFiles = fs.readdirSync(path.resolve(__dirname, templateDir));
-  return templateFiles.map(item => {
-    const parts = item.split('.');
-    const name = parts[0];
-    const extension = parts[1];
-    return new HtmlWebpackPlugin({
-      filename: `${name}.html`,
-      template: path.resolve(__dirname, `${templateDir}/${name}.${extension}`),
-      inject: false,
-      hash: true,
-    })
-  })
-}
 
-const htmlPlugins = generateHtmlPlugins('./src/html/views')
+
 
 module.exports = {
-  entry: { main: './src/js/index.js' },
+  entry: [
+     './src/index.js',
+     './src/main.scss',
+   ] ,
   output: {
+    path: path.resolve(__dirname, 'dist'),
     filename: './js/[name].[chunkhash].js',
   },
   module: {
+
     rules: [
       {
         test: /\.js$/,
@@ -51,35 +42,52 @@ module.exports = {
             }, 'sass-loader']
       },
       {
+        test: /\.(jpe?g|png|gif|svg)$/i,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              outputPath: './img',
+              name: '[name].[ext]',
+            }
+          },
+
+          ]
+      },
+     {
         test: /\.html$/,
         include: path.resolve(__dirname, 'src/html/includes'),
-        use: ['raw-loader']
-      }
+        use: [ 'html-loader',]
+      },
+
     ]
   },
-  plugins: [ 
+  plugins: [
     new CopyPlugin({
       patterns: [{
         from: './src/fonts',
         to: './fonts'
       },
       {
-        from: './src/favicon',
-        to: './favicon'
-      },
-      {
         from: './src/img',
         to: './img'
       },
-      {
-        from: './src/uploads',
-        to: './uploads'
-      }
+
     ]}),
     new CleanWebpackPlugin(),
     new MiniCssExtractPlugin({
-      filename: './css/style.[contenthash].css',
+      filename: './style.[contenthash].css',
+
+    }
+    ),
+    new HtmlWebpackPlugin({
+      template: "src/index.html",
     }),
-    new WebpackMd5Hash(),
-  ].concat(htmlPlugins)
+    new ImageminPlugin({
+      pngquant: {
+        quality: '60-70'
+      },
+      plugins: [imageminMozjpeg({quality: 60})]
+    })
+  ]
 };

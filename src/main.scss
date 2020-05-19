@@ -1,0 +1,71 @@
+/* $font-family-sans-serif: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !default;
+$font-family-serif:      Georgia, "Times New Roman", Times, serif !default;
+$font-family-monospace:  Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace !default;
+$font-family-base:       $font-family-sans-serif !default;
+ */
+
+@import "~bootstrap/scss/bootstrap";
+
+//@include row-cols(3) create the columns
+//row-cols-3 this is class
+//<div class="w-100"></div>
+//border
+//px-lg-5 change padding 
+//mx-lg-n5 change margin
+//col-{br}-auto
+//bg-light
+//container-lg
+//align-items-start, align-items-center , align-items-end
+//align-self-start align-self-center  align-self-end
+
+//justify-content-start justify-content-center justify-content-end 
+//justify-content-around justify-content-between
+//no-gutters
+//<div class="w-100 d-none d-md-block"></div>
+//order-3 order-md-5 Reordering 
+//order-first and order-last
+//offset-md-4 offset-md-0
+//ml-auto
+
+//@include make-row();
+
+.header__top {
+	background-color: #b4b6bb;
+	&-left {
+		padding: 0 28px 0 20px;
+		background-color: #e95f0e;
+		height: 46px;
+		span {
+			padding-left: 16px;
+			color: #ffffff;
+			font-size: 17px;
+			font-weight: 500;
+			line-height: 30px;
+			text-transform: uppercase;
+		}
+	}
+ 
+  &-center {
+    .form-control {
+    	height: 2.3rem;
+    }
+	}
+  
+	.header__dropdown {
+		&-icon1 {
+			background: url('./img/test.jpg') 0 0;
+		}
+
+		&-icon2 {
+			background: url('./img/languageFlag.png') 0 0;
+		}
+
+		&-icon3 {
+			background: url('./img/languageFlag.png') 0 0;
+		}
+		
+	}
+
+
+
+}

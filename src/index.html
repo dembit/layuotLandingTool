@@ -1,16 +1,54 @@
-<html>
-
+<!doctype html>
+<html lang="en">
 <head>
-    <link rel="stylesheet" href="<%=htmlWebpackPlugin.files.chunks.main.css %>">
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
 </head>
-
 <body>
-    <div id="container">
-        <span id="scss">A "Hello, world!" from .scss!</span>
-        <span id="sass">A "Hello, world!" from .sass!</span>
+<header class="header">
+    <div class="header__top">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 header__top-left">
+                    <img src="./img/present.png" alt="">
+                    <span>Получите подарок сейчас</span>
+                </div>
+                <div class="col-lg-auto header__top-center">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Search">
+                        <div class="input-group-append">
+                            <button class="btn btn-success" type="submit">Go</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 header__top-right">
+                    <div class="row">
+                        <div class="dropdown header__dropdown">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                img
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <a class="dropdown-item header__dropdown-icon1" href="#"></a>
+                                <a class="dropdown-item header__dropdown-icon2" href="#"></a>
+                                <a class="dropdown-item header__dropdown-icon3" href="#"></a>
+                            </div>
+                        </div>
+                        <div class="header__icon">
+                            <span><img src="./img/iconFacebook.png" alt=""></span>
+                            <span><img src="./img/iconYoutube.png" alt=""></span>
+                            <span><img src="./img/iconMail.png" alt=""></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
     </div>
-
-    <script src="<%= htmlWebpackPlugin.files.chunks.main.entry %>"></script>
+</header>
 </body>
-
 </html>
